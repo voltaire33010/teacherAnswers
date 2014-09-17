@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+http://www.springframework.org/schema/security
+http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+   <security:http auto-config="true">
+              <security:intercept-url pattern="/admin.html" access="ROLE_ADMIN" /> 
+              <security:intercept-url pattern="/showFaculty.html" access="ROLE_ADMIN" />   
+        <security:intercept-url pattern="/greeting.html" access="ROLE_PROFESSOR_EDITOR" />
+       <security:intercept-url pattern="/searchProfessorRecord.html" access="ROLE_PROFESSOR_EDITOR" />  
+      
+       <!-- <security:intercept-url pattern="/pdfs/*" access="ROLE_PROFESSOR_EDITOR" />   --> 
+<!--      <security:form-login login-page="/custom_login.html" login-processing-url="/j_spring_security_check" authentication-failure-url="/custom_login.html?error" /> -->  
+      <security:form-login login-page="/custom_login.html" login-processing-url="/j_spring_security_check" authentication-failure-handler-ref="serverErrorHandler"/>
+        
+    </security:http>
+     <bean id="serverErrorHandler" class="com.securecodetips.security.ServerErrorFailureHandler"/>
+  <!--     <security:authentication-manager>
+        <security:authentication-provider>
+            <security:user-service>
+            <security:user authorities="ROLE_ADMIN, ROLE_PROFESSOR_EDITOR" name="admin" password="adminPass" />
+<security:user authorities="ROLE_PROFESSOR_EDITOR" name="miguel" password="miguelPassword" />
+ <security:user authorities="ROLE_PROFESSOR_EDITOR" name="john" password="johnPassword" />
+  <security:user authorities="ROLE_PROFESSOR_EDITOR" name="stacey" password="staceyPassword" />
+   <security:user authorities="ROLE_PROFESSOR_EDITOR" name="alice" password="alicePassword" />
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager> -->
+    
+  <security:authentication-manager>
+		<security:authentication-provider> 
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+		</security:authentication-provider>		
+	</security:authentication-manager>
+	
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+		<property name="url" value="jdbc:mysql://localhost:3306/teacherAnswer" />	
+		<property name="username" value="root" />
+		<property name="password" value=""/>
+	</bean> 
+</beans>
