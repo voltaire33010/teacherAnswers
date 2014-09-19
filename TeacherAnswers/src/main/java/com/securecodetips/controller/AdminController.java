@@ -52,8 +52,8 @@ public class AdminController {
     	//  if (result.hasErrors()){
     	//	  model.addAttribute("error", "your name has too much characteres");
     	//  }
-    	// return "showFaculty";
-    	  return "redirect:showFaculty.html";
+    	 return "showFaculty";
+    	 // return "redirect:showFaculty.html";
       }
       
       
